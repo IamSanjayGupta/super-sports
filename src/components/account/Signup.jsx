@@ -11,8 +11,10 @@ import {
   useColorModeValue,
   VStack,
   HStack,
+  Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { Link as RichLink } from "react-router-dom";
 const initData = { firstName: "", lastName: "", email: "", password: "" };
 
 const Signup = () => {
@@ -20,9 +22,9 @@ const Signup = () => {
 
   const handleInput = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setFormData({ ...formData, [name]: value });
   };
+
   const handleForm = (e) => {
     e.preventDefault();
     console.log(formData);
@@ -54,14 +56,16 @@ const Signup = () => {
               <FormLabel>Password</FormLabel>
               <Input type="password" name="password" onChange={handleInput} />
             </FormControl>
-            <HStack pb="4" direction={{ base: "column", sm: "row" }} justify={"space-between"}>
-              <Checkbox>Remember me</Checkbox>
-              <Link color={"blue.400"}>Forgot password?</Link>
-            </HStack>
             <Button colorScheme={"blue"} type="submit">
               Sign up
             </Button>
           </Stack>
+          <Text my="4" textAlign={"center"}>
+            Already have an account?{" "}
+            <Link as={RichLink} color={"blue.400"} to="/login">
+              Login
+            </Link>
+          </Text>
         </Box>
       </VStack>
     </VStack>
