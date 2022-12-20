@@ -1,6 +1,10 @@
 import * as types from "./actionTypes";
 
-const initData = {};
+const initData = {
+  token: "",
+  isloading: false,
+  isError: false,
+};
 
 export const authReducer = (state = initData, { type, payload }) => {
   switch (type) {
