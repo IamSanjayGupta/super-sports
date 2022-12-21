@@ -9,6 +9,7 @@ const eventSchema = new mongoose.Schema(
     picture: { type: String },
     schedule: { type: Date, required: true },
     player_limits: { type: Number, required: true, default: 2 },
+    organizer: { type: mongoose.Schema.Types.ObjectId, ref: "user", require: true },
   },
   { timestamps: true }
 );

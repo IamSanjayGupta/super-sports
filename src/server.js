@@ -1,6 +1,6 @@
 const express = require("express");
 const { dbConnect } = require("./config");
-const { userRouter } = require("./routes");
+const { userRouter, eventRouter } = require("./routes");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -8,6 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/users", userRouter);
+app.use("/events", eventRouter);
 
 app.get("/", (req, res) => res.send("Hello world. Welcome to word super sports api."));
 
