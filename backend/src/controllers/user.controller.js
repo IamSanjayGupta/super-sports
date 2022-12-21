@@ -1,4 +1,4 @@
-const userModel = require("../model/user.model");
+const userModel = require("../models/user.model");
 
 //pass user data object to create account
 const createAccount = async (userData) => {
