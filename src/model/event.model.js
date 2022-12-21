@@ -9,6 +9,11 @@ const eventSchema = new mongoose.Schema(
     picture: { type: String },
     schedule: { type: Date, required: true },
     player_limits: { type: Number, required: true, default: 2 },
+    category: {
+      type: String,
+      enums: ["Cricket", "Football", "Badminton", "Tennis", "Basketball", "Golf", "Hockey"],
+      required: true,
+    },
     organizer: { type: mongoose.Schema.Types.ObjectId, ref: "user", require: true },
   },
   { timestamps: true }
