@@ -27,3 +27,14 @@ export const getEventsAPI =
       dispatch({ type: types.EVENT_ERROR, payload: error.response.data.message });
     }
   };
+
+export const getEventDetailsAPI = (eventId) => async (dispatch) => {
+  dispatch({ type: types.EVENT_LOADING });
+  try {
+    const res = await axiosInstance.get("/events" + "/" + eventId);
+    dispatch({ type: types.GET_EVENT_DETAILS, payload: res.data.data });
+  } catch (error) {
+    dispatch({ type: types.EVENT_ERROR, payload: error.response.data.message });
+    return Promise.reject(error.response.data.message);
+  }
+};

@@ -63,7 +63,7 @@ const EventList = () => {
 
           <Input onChange={handleSearch} w="xm" placeholder="Type here to search..." />
         </Stack>
-        {events.length ? (
+        {events?.length ? (
           <SimpleGrid w="full" gap="4" columns={{ base: 1, md: 2, lg: 4 }}>
             {events?.map((event) => (
               <EventCard key={event._id} {...event} />

@@ -3,3 +3,4 @@ export const EVENT_ERROR = "EVENT_ERROR";
 export const CREATE_EVENT = "CREATE_EVENT";
 
 export const GET_EVENTS = "GET_EVENTS";
+export const GET_EVENT_DETAILS = "GET_EVENT_DETAILS";

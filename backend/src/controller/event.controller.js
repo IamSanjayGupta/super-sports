@@ -21,4 +21,15 @@ const getAllEvents = async (query, others) => {
   }
 };
 
-module.exports = { createEvent, getAllEvents };
+//get event by id
+const getEventDetails = async (eventId) => {
+  try {
+    return await eventModel
+      .findById(eventId)
+      .populate("organizer", ["firstName", "lastName", "email"]);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+module.exports = { createEvent, getAllEvents, getEventDetails };

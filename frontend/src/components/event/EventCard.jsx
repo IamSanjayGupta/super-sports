@@ -1,5 +1,6 @@
 import { Tag, Text, VStack, Button, Image, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
+import { Link as RichLink } from "react-router-dom";
 
 const EventCard = (event) => {
   const { _id, title, description, picture, schedule, player_limits, category, organizer } = event;
@@ -17,7 +18,13 @@ const EventCard = (event) => {
           Category: <Tag>{category}</Tag>
         </Text>
         <Text fontSize={"sm"}>Schedule: {new Date(schedule).toLocaleString()}</Text>
-        <Button size="sm" colorScheme={"blue"} variant="outline">
+        <Button
+          as={RichLink}
+          to={`/eventDetails/${_id}`}
+          size="sm"
+          colorScheme={"blue"}
+          variant="outline"
+        >
           More
         </Button>
       </VStack>
