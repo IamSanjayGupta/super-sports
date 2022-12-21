@@ -10,7 +10,7 @@ user.post("/signup", async (req, res) => {
   try {
     let user = await getUser({ email });
     if (user) {
-      return res.status(409).send({ message: "Account already exist" });
+      return res.status(409).send({ message: "Account already exists" });
     } else {
       user = await createAccount({ firstName, lastName, email, password });
       return res.send({ message: "Account Created", data: user });
