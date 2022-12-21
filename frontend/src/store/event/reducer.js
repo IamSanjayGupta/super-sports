@@ -14,6 +14,8 @@ export const eventReducer = (state = initData, { type, payload }) => {
       return { ...state, isloading: false, isError: true };
     case types.CREATE_EVENT:
       return { ...state, isloading: false };
+    case types.GET_EVENTS:
+      return { ...state, isloading: false, events: payload };
 
     default:
       return state;

@@ -19,10 +19,11 @@ import {
   Textarea,
   Select,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createEventAPI } from "../../store/event/action";
+import { sportsName } from "../../utils/sportsName";
 
 const initData = {
   title: "",
@@ -32,8 +33,6 @@ const initData = {
   schedule: "",
   player_limits: 2,
 };
-
-const sportsName = ["Cricket", "Football", "Badminton", "Tennis", "Basketball", "Golf", "Hockey"];
 
 const NewEvent = () => {
   const [formData, setFormData] = useState(initData);

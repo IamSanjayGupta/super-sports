@@ -60,7 +60,13 @@ const Navbar = () => {
   };
 
   return (
-    <Box zIndex="100" pos={"sticky"} top={0} bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+    <Box
+      zIndex="10000"
+      pos={"sticky"}
+      top={0}
+      bg={useColorModeValue("gray.100", "gray.900")}
+      px={4}
+    >
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <IconButton
           size={"md"}
@@ -70,10 +76,12 @@ const Navbar = () => {
           onClick={isOpen ? onClose : onOpen}
         />
         <HStack spacing={8} alignItems={"center"}>
-          <Image
-            width={"150px"}
-            src="https://www.sport-fm.com.cy/wp-content/uploads/2021/12/Super-Sport-FM-LOGO-2021-WHITE-1.png"
-          />
+          <Link as={RichLink} to="/">
+            <Image
+              width={"150px"}
+              src="https://www.sport-fm.com.cy/wp-content/uploads/2021/12/Super-Sport-FM-LOGO-2021-WHITE-1.png"
+            />
+          </Link>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
             {Links.map((link) => (
               <NavLink key={link.path} {...link} />
