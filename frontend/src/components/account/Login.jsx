@@ -12,15 +12,41 @@ import {
   VStack,
   HStack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link as RichLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link as RichLink, useNavigate } from "react-router-dom";
+import { loginAPI } from "../../store/auth/action";
 const initData = { email: "", password: "" };
 
 const Login = () => {
+  const { isLoading, accessToken, isError, errorMessage } = useSelector((store) => store.auth);
   const [formData, setFormData] = useState(initData);
-  const { isLoading } = useSelector((store) => store.auth);
+  const toast = useToast();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (accessToken) {
+      toast({
+        title: "Login Successfull",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/");
+      return;
+    }
+    if (isError) {
+      toast({
+        title: errorMessage,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [accessToken, isError]);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -28,8 +54,9 @@ const Login = () => {
   };
   const handleForm = (e) => {
     e.preventDefault();
-    console.log(formData);
+    dispatch(loginAPI(formData));
   };
+
   return (
     <VStack bg={useColorModeValue("gray.50", "gray.800")}>
       <VStack spacing={8} mx={"auto"} maxW={"lg"} p={6}>

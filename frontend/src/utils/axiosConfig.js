@@ -21,7 +21,7 @@ axiosInstance.interceptors.response.use(
   (succ) => succ,
   async (err) => {
     let originalConfig = err.config;
-    if (originalConfig.url !== "/users/login" && originalConfig.url !== "/users/signup") {
+    if (originalConfig.url !== "/login" && originalConfig.url !== "/signup") {
       if (err.response.status === 498 && !err.config._isRetry) {
         err.config["_isRetry"] = true;
         try {

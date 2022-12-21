@@ -12,15 +12,47 @@ import {
   VStack,
   HStack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link as RichLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link as RichLink, useNavigate } from "react-router-dom";
+import { signupAPI } from "../../store/auth/action";
 const initData = { firstName: "", lastName: "", email: "", password: "" };
 
 const Signup = () => {
   const [formData, setFormData] = useState(initData);
-  const { isLoading } = useSelector((store) => store.auth);
+  const { isLoading, signupStatus, accessToken, isError, errorMessage } = useSelector(
+    (store) => store.auth
+  );
+  const toast = useToast();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/");
+      return;
+    }
+    if (isError) {
+      toast({
+        title: errorMessage,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/login");
+      return;
+    }
+    if (signupStatus) {
+      toast({
+        title: "Signup Successfull",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [accessToken, isError, signupStatus]);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -29,7 +61,7 @@ const Signup = () => {
 
   const handleForm = (e) => {
     e.preventDefault();
-    console.log(formData);
+    dispatch(signupAPI(formData));
   };
   return (
     <VStack bg={useColorModeValue("gray.50", "gray.800")}>

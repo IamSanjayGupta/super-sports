@@ -43,7 +43,7 @@ const NavLink = ({ path, name }) => (
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-  const { token } = useSelector((store) => store.auth);
+  const { accessToken } = useSelector((store) => store.auth);
 
   return (
     <Box zIndex="100" pos={"sticky"} top={0} bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -70,7 +70,7 @@ const Navbar = () => {
           <Button onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
-          {token ? (
+          {accessToken ? (
             <Menu>
               <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
                 <Avatar

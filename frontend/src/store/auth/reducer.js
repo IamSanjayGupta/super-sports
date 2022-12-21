@@ -8,6 +8,7 @@ import * as types from "./actionTypes";
 const initData = {
   isLoading: false,
   isError: false,
+  errorMessage: "",
   signupStatus: false,
   auth: getLocalStorageItem("accessToken") || "",
   accessToken: getLocalStorageItem("accessToken") || "",
@@ -16,9 +17,15 @@ const initData = {
 export const authReducer = (state = initData, { type, payload }) => {
   switch (type) {
     case types.ACCOUNT_LOADING:
-      return { ...state, isLoading: true, isError: false };
+      return { ...state, isLoading: true, isError: false, signupStatus: false };
     case types.ACCOUNT_ERROR:
-      return { ...state, isLoading: false, isError: true };
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        signupStatus: false,
+        errorMessage: payload,
+      };
     case types.LOGIN_SUCCESS:
       setLocalStorageItem("accessToken", payload.accessToken);
       setLocalStorageItem("refreshToken", payload.refreshToken);
