@@ -23,7 +23,7 @@ import { Link as RichLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAPI } from "../store/auth/action";
 const Links = [
-  { name: "Login", path: "/login" },
+  { name: "New Event", path: "/newEvent" },
   { name: "Signup", path: "/signup" },
 ];
 
