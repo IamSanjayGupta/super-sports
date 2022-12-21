@@ -17,12 +17,23 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Textarea,
+  Select,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { createEventAPI } from "../../store/event/action";
 
-const initData = { title: "", description: "", picture: "", schedule: "", player_limits: 2 };
+const initData = {
+  title: "",
+  description: "",
+  picture: "",
+  category: "",
+  schedule: "",
+  player_limits: 2,
+};
+
+const sportsName = ["Cricket", "Football", "Badminton", "Tennis", "Basketball", "Golf", "Hockey"];
 
 const NewEvent = () => {
   const [formData, setFormData] = useState(initData);
@@ -38,8 +49,25 @@ const NewEvent = () => {
 
   const handleForm = (e) => {
     e.preventDefault();
-    console.log(formData);
+    dispatch(createEventAPI(formData))
+      .then((res) => {
+        toast({
+          title: "Event Created",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: error,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
   };
+
   return (
     <VStack bg={useColorModeValue("gray.50", "gray.800")}>
       <VStack spacing={8} mx={"auto"} maxW={"xl"} p={6}>
@@ -60,6 +88,16 @@ const NewEvent = () => {
                 name="description"
                 onChange={handleInput}
               />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Category</FormLabel>
+              <Select placeholder="Select Category" name="category" onChange={handleInput}>
+                {sportsName.map((sport) => (
+                  <option key={sport} value={sport}>
+                    {sport}
+                  </option>
+                ))}
+              </Select>
             </FormControl>
             <FormControl>
               <FormLabel>Picture URL</FormLabel>
