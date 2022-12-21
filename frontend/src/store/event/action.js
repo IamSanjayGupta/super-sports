@@ -16,9 +16,10 @@ export const getEventsAPI =
   ({ q, category }) =>
   async (dispatch) => {
     dispatch({ type: types.EVENT_LOADING });
+
     let url = `/events?q=${q}`;
     if (category) url += "&category=" + category;
-    console.log(url);
+
     try {
       const res = await axiosInstance.get(url);
       dispatch({ type: types.GET_EVENTS, payload: res.data.data });

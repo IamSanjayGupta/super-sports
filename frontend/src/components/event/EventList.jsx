@@ -4,6 +4,7 @@ import {
   Select,
   SimpleGrid,
   Stack,
+  Text,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
@@ -13,6 +14,7 @@ import { getEventsAPI } from "../../store/event/action";
 import EventCard from "./EventCard";
 import { sportsName } from "../../utils/sportsName";
 
+let debounceid = 0;
 const EventList = () => {
   const { events } = useSelector((store) => store.event);
   const dispatch = useDispatch();
@@ -24,12 +26,13 @@ const EventList = () => {
   }, [searchQuery, filter]);
 
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
+    debounceid && clearTimeout(debounceid);
+    debounceid = setTimeout(() => setSearchQuery(e.target.value), 1000);
   };
 
   return (
-    <VStack maxW="full" bg={useColorModeValue("gray.50", "gray.800")}>
-      <VStack mx={"auto"} maxW={"full"} p={12}>
+    <VStack w="9tvw" m="auto" bg={useColorModeValue("gray.50", "gray.800")}>
+      <VStack mx={"auto"} w={"full"} p={12}>
         <Stack
           flexDir={{ base: "column", md: "row" }}
           pos={"sticky"}
@@ -60,11 +63,15 @@ const EventList = () => {
 
           <Input onChange={handleSearch} w="xm" placeholder="Type here to search..." />
         </Stack>
-        <SimpleGrid w="full" gap="4" columns={{ base: 1, md: 2, lg: 4 }}>
-          {events?.map((event) => (
-            <EventCard key={event._id} {...event} />
-          ))}
-        </SimpleGrid>
+        {events.length ? (
+          <SimpleGrid w="full" gap="4" columns={{ base: 1, md: 2, lg: 4 }}>
+            {events?.map((event) => (
+              <EventCard key={event._id} {...event} />
+            ))}
+          </SimpleGrid>
+        ) : (
+          <Text>No event found</Text>
+        )}
       </VStack>
     </VStack>
   );
