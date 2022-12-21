@@ -1,11 +1,20 @@
 const express = require("express");
-const { createEvent } = require("../controller");
+const { createEvent, getAllEvents } = require("../controller");
 const { authMiddleware } = require("../middlewares");
 
 const event = express.Router();
 event.use(authMiddleware);
 
-event.get("/", async (req, res) => {});
+//get all events
+event.get("/", async (req, res) => {
+  const { q = "", ...others } = req.query;
+  try {
+    let events = await getAllEvents(q, others);
+    return res.send({ message: events.length ? "Events found" : "No events found", data: events });
+  } catch (error) {
+    return res.status(400).send({ message: error.message });
+  }
+});
 
 // to create new Event
 event.post("/", async (req, res) => {

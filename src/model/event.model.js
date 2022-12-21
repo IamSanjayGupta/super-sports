@@ -14,7 +14,7 @@ const eventSchema = new mongoose.Schema(
       enums: ["Cricket", "Football", "Badminton", "Tennis", "Basketball", "Golf", "Hockey"],
       required: true,
     },
-    organizer: { type: mongoose.Schema.Types.ObjectId, ref: "user", require: true },
+    organizer: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
   },
   { timestamps: true }
 );

@@ -21,7 +21,7 @@ const getAccessToken = (refreshToken) => {
         firstName: tokenData.firstName,
         lastName: tokenData.lastName,
         email: tokenData.email,
-        userid: tokenData._id,
+        userid: tokenData.userid,
       },
       process.env.ACCESS_TOKEN_SECRET_KEY,
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRY_TIME }
