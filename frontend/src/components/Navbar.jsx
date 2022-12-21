@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link as RichLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Links = [
   { name: "Login", path: "/login" },
   { name: "Signup", path: "/signup" },
@@ -42,9 +43,10 @@ const NavLink = ({ path, name }) => (
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const { token } = useSelector((store) => store.auth);
 
   return (
-    <Box pos={"sticky"} top={0} bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+    <Box zIndex="100" pos={"sticky"} top={0} bg={useColorModeValue("gray.100", "gray.900")} px={4}>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <IconButton
           size={"md"}
@@ -68,23 +70,26 @@ const Navbar = () => {
           <Button onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
-          <NavLink path={"/login"} name={"Login / Signup"} />
-          <Menu>
-            <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
-              <Avatar
-                size={"sm"}
-                src={
-                  "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                }
-              />
-            </MenuButton>
-            <MenuList>
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuDivider />
-              <MenuItem>Logout</MenuItem>
-            </MenuList>
-          </Menu>
+          {token ? (
+            <Menu>
+              <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
+                <Avatar
+                  size={"sm"}
+                  src={
+                    "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+                  }
+                />
+              </MenuButton>
+              <MenuList>
+                <MenuItem>Profile</MenuItem>
+                <MenuItem>Settings</MenuItem>
+                <MenuDivider />
+                <MenuItem>Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          ) : (
+            <NavLink path={"/login"} name={"Login / Signup"} />
+          )}
         </Flex>
       </Flex>
 
