@@ -16,10 +16,12 @@ import {
   Stack,
   useColorMode,
   Image,
+  useToast,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link as RichLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutAPI } from "../store/auth/action";
 const Links = [
   { name: "Login", path: "/login" },
   { name: "Signup", path: "/signup" },
@@ -44,6 +46,18 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const { accessToken } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  const handleLogout = () => {
+    dispatch(logoutAPI());
+    toast({
+      title: "Logout Successfull",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
 
   return (
     <Box zIndex="100" pos={"sticky"} top={0} bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -84,7 +98,7 @@ const Navbar = () => {
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>Settings</MenuItem>
                 <MenuDivider />
-                <MenuItem>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </MenuList>
             </Menu>
           ) : (

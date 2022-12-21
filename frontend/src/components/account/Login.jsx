@@ -21,7 +21,7 @@ import { loginAPI } from "../../store/auth/action";
 const initData = { email: "", password: "" };
 
 const Login = () => {
-  const { isLoading, accessToken, isError, errorMessage } = useSelector((store) => store.auth);
+  const { isLoading, accessToken } = useSelector((store) => store.auth);
   const [formData, setFormData] = useState(initData);
   const toast = useToast();
   const navigate = useNavigate();
@@ -38,15 +38,7 @@ const Login = () => {
       navigate("/");
       return;
     }
-    if (isError) {
-      toast({
-        title: errorMessage,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  }, [accessToken, isError]);
+  }, [accessToken]);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -54,7 +46,16 @@ const Login = () => {
   };
   const handleForm = (e) => {
     e.preventDefault();
-    dispatch(loginAPI(formData));
+    dispatch(loginAPI(formData))
+      .then((res) => {})
+      .catch((err) => {
+        toast({
+          title: err,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
   };
 
   return (

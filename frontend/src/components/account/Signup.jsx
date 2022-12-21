@@ -22,37 +22,14 @@ const initData = { firstName: "", lastName: "", email: "", password: "" };
 
 const Signup = () => {
   const [formData, setFormData] = useState(initData);
-  const { isLoading, signupStatus, accessToken, isError, errorMessage } = useSelector(
-    (store) => store.auth
-  );
+  const { isLoading, accessToken } = useSelector((store) => store.auth);
   const toast = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (accessToken) {
-      navigate("/");
-      return;
-    }
-    if (isError) {
-      toast({
-        title: errorMessage,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      navigate("/login");
-      return;
-    }
-    if (signupStatus) {
-      toast({
-        title: "Signup Successfull",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  }, [accessToken, isError, signupStatus]);
+    if (accessToken) navigate("/");
+  }, [accessToken]);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -61,8 +38,27 @@ const Signup = () => {
 
   const handleForm = (e) => {
     e.preventDefault();
-    dispatch(signupAPI(formData));
+    dispatch(signupAPI(formData))
+      .then((res) => {
+        toast({
+          title: "Signup Successfull",
+          description: "Login with same Credentials ",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        navigate("/login");
+      })
+      .catch((error) => {
+        toast({
+          title: error,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
   };
+
   return (
     <VStack bg={useColorModeValue("gray.50", "gray.800")}>
       <VStack spacing={8} mx={"auto"} maxW={"lg"} p={6}>
