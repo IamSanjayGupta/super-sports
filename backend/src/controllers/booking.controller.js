@@ -60,7 +60,9 @@ const pendingBookings = async (organizer) => {
 
     bookings = bookings.filter((el) => {
       let obj = el.toObject();
-      return obj.event.organizer == organizer;
+      return (
+        obj.event.organizer == organizer && new Date(obj.event.schedule) > new Date(Date.now())
+      );
     });
     return bookings;
   } catch (error) {
