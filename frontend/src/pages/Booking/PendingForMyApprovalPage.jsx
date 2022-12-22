@@ -11,8 +11,11 @@ const PendingForMyApprovalPage = () => {
   useEffect(() => {
     dispatch(getPendingApprovalAPI());
   }, []);
+
   const handleBooking = (eventid, status) => {
-    dispatch(updateBookingAPI(eventid, { status }));
+    dispatch(updateBookingAPI(eventid, { status })).then(() => {
+      dispatch(getPendingApprovalAPI());
+    });
   };
 
   return (

@@ -65,12 +65,12 @@ booking.post("/", async (req, res) => {
 booking.patch("/:bookingId", async (req, res) => {
   const { status } = req.body;
   const { bookingId } = req.params;
-
+  console.log(status);
   if (!bookingId || !status) return res.status(400).send({ message: "Required Data missing" });
 
   try {
     let book = await updateBooking(bookingId, {
-      status: status === "Approve" ? "Approved" : "Rejected",
+      status: status === "Accept" ? "Approved" : "Rejected",
     });
     return res.send({ message: "Booking updated", data: book });
   } catch (error) {

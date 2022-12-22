@@ -22,7 +22,6 @@ event.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     let event = await getEventDetails(id);
-
     let bookedCount = (await getBookings({ event: id, status: "Approved" })).length;
     return res.send({ message: "Events found", data: { ...event?.toObject(), bookedCount } });
   } catch (error) {

@@ -70,6 +70,7 @@ const pendingBookings = async (organizer) => {
 
 //accept or reject booking
 const updateBooking = async (id, data) => {
+  console.log(data);
   try {
     return await bookingModel.findByIdAndUpdate(id, data, { new: true });
   } catch (error) {

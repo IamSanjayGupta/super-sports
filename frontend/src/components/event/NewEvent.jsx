@@ -36,7 +36,7 @@ const initData = {
 
 const NewEvent = () => {
   const [formData, setFormData] = useState(initData);
-  const { isLoading } = useSelector((store) => store.auth);
+  const { isLoading } = useSelector((store) => store.event);
   const toast = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
