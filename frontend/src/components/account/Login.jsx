@@ -59,14 +59,14 @@ const Login = () => {
   };
 
   return (
-    <VStack bg={useColorModeValue("gray.50", "gray.800")}>
+    <VStack minH={"100vh"} bg={useColorModeValue("gray.50", "gray.800")}>
       <VStack spacing={8} mx={"auto"} maxW={"lg"} p={6}>
         <Heading textAlign={"center"} fontSize={"4xl"}>
           Login
         </Heading>
 
         <Box rounded={"lg"} bg={useColorModeValue("white", "gray.700")} boxShadow={"lg"} p={8}>
-          <Stack w={"xs"} as={"form"} onSubmit={handleForm} spacing={4}>
+          <Stack w={{ base: "auto", md: "xs" }} as={"form"} onSubmit={handleForm} spacing={4}>
             <FormControl isRequired>
               <FormLabel>Email Address</FormLabel>
               <Input type="email" name="email" onChange={handleInput} />
@@ -75,10 +75,10 @@ const Login = () => {
               <FormLabel>Password</FormLabel>
               <Input type="password" name="password" onChange={handleInput} />
             </FormControl>
-            <HStack direction={{ base: "column", sm: "row" }} justify={"space-between"}>
+            <Stack direction={{ base: "column", sm: "row" }} justify={"space-between"}>
               <Checkbox>Remember me</Checkbox>
               <Link color={"blue.400"}>Forgot password?</Link>
-            </HStack>
+            </Stack>
             <Button
               colorScheme={"blue"}
               type="submit"
