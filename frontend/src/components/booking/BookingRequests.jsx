@@ -66,7 +66,7 @@ const BookingRequests = () => {
             <TabPanel>
               <SimpleGrid w="full" gap="4" columns={{ base: 1, md: 2, lg: 4 }}>
                 {bookings
-                  .filter((booking) => booking.status === "Expired")
+                  .filter((booking) => new Date(booking.event.schedule) <= new Date(Date.now()))
                   .map((el) => {
                     return <BookingCard key={el._id} {...el} />;
                   })}

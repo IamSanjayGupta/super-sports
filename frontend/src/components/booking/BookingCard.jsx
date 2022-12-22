@@ -25,7 +25,8 @@ const BookingCard = (data) => {
           Category: <Tag>{event.category}</Tag>
         </Text>
         <Text fontWeight={"500"}>
-          Status: <Tag>{status}</Tag>
+          Schedule:{" "}
+          <Tag>{new Date(event.schedule).toLocaleString("en-GB", { timeZone: "IST" })}</Tag>
         </Text>
         <Button
           as={RichLink}
