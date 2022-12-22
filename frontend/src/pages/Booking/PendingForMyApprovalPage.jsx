@@ -1,4 +1,4 @@
-import { SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { SimpleGrid, Text, useToast, VStack } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PendingBookingCard from "../../components/booking/PendingBookingCard";
@@ -7,13 +7,19 @@ import { getPendingApprovalAPI, updateBookingAPI } from "../../store/booking/act
 const PendingForMyApprovalPage = () => {
   const { myPendingApprovalBookings } = useSelector((store) => store.booking);
   const dispatch = useDispatch();
-
+  const toast = useToast();
   useEffect(() => {
     dispatch(getPendingApprovalAPI());
   }, []);
 
   const handleBooking = (eventid, status) => {
     dispatch(updateBookingAPI(eventid, { status })).then(() => {
+      toast({
+        title: "Event updated",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       dispatch(getPendingApprovalAPI());
     });
   };
