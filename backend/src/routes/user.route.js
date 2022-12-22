@@ -1,5 +1,5 @@
 const express = require("express");
-const { getUser, createAccount, getTokens } = require("../controllers");
+const { getUser, createAccount, getTokens, getAccessToken } = require("../controllers");
 
 const user = express.Router();
 
@@ -39,6 +39,16 @@ user.post("/login", async (req, res) => {
       return res.status(401).send({ message: "Invalid Credentials" });
     }
   } catch (error) {
+    return res.status(400).send({ message: error.message });
+  }
+});
+
+user.get("/refreshToken/:refreshToken", async (req, res) => {
+  try {
+    let accessToken = getAccessToken(req.params.refreshToken);
+    return res.send({ status: true, message: "Access Token generated", data: { accessToken } });
+  } catch (error) {
+    error.message = "Invalid/Expire refresh token";
     return res.status(400).send({ message: error.message });
   }
 });
