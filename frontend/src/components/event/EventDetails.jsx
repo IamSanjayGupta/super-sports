@@ -12,7 +12,7 @@ import {
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { createBookingAPI } from "../../store/booking/actions";
+import { createBookingAPI, getApprovedPlayerListAPI } from "../../store/booking/actions";
 import { getEventDetailsAPI } from "../../store/event/action";
 import PlayerList from "./PlayerList";
 
@@ -26,7 +26,10 @@ const EventDetails = () => {
   useEffect(() => {
     dispatch(getEventDetailsAPI(id));
   }, []);
-  console.log(approvedPlayerList);
+
+  useEffect(() => {
+    eventDetails._id && dispatch(getApprovedPlayerListAPI(eventDetails._id));
+  }, [eventDetails._id]);
 
   const handleBooking = () => {
     dispatch(createBookingAPI({ status: "approve", event: eventDetails._id }))
@@ -48,6 +51,7 @@ const EventDetails = () => {
         });
       });
   };
+
   return (
     <>
       {eventDetails._id ? (
@@ -80,11 +84,11 @@ const EventDetails = () => {
             >
               {approvedPlayerList?.length ? "Already joined" : "Request"}
             </Button>
-            <PlayerList eventId={eventDetails._id} />
+            {approvedPlayerList?.length && <PlayerList players={approvedPlayerList} />}
           </VStack>
         </Stack>
       ) : (
-        <Text>Loading...</Text>
+        <Text textAlign={"center"}>Loading...</Text>
       )}
     </>
   );
