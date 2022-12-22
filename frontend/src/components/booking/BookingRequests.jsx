@@ -39,7 +39,7 @@ const BookingRequests = () => {
                   .map((el) => {
                     return <BookingCard key={el._id} {...el} />;
                   })}
-              </SimpleGrid> 
+              </SimpleGrid>
             </TabPanel>
             {/* for Pending request */}
             <TabPanel>
