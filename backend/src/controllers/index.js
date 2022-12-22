@@ -8,6 +8,7 @@ const {
   approveBooking,
   rejectBooking,
   getApprovedBookingUsers,
+  pendingBookings,
 } = require("./booking.controller");
 
 module.exports = {
@@ -24,4 +25,5 @@ module.exports = {
   approveBooking,
   rejectBooking,
   getApprovedBookingUsers,
+  pendingBookings,
 };

@@ -5,6 +5,7 @@ const {
   approveBooking,
   rejectBooking,
   getApprovedBookingUsers,
+  pendingBookings,
 } = require("../controllers");
 const { authMiddleware } = require("../middlewares");
 
@@ -20,6 +21,17 @@ booking.get("/", async (req, res) => {
       message: bookings.length ? "Bookings found" : "No bookings found",
       data: bookings,
     });
+  } catch (error) {
+    return res.status(400).send({ message: error.message });
+  }
+});
+
+//get bookings pending for user approval
+booking.get("/pendingBookings", async (req, res) => {
+  const { userid } = req.body;
+  try {
+    let bookings = await pendingBookings(userid);
+    return res.send({ message: "Pending Booking", data: bookings });
   } catch (error) {
     return res.status(400).send({ message: error.message });
   }

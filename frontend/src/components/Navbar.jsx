@@ -27,7 +27,8 @@ import lightLogo from "../assets/light_logo.png";
 
 const Links = [
   { name: "New Event", path: "/newEvent" },
-  { name: "Requests", path: "/requests" },
+  { name: "Bookings", path: "/requests" },
+  { name: "Pending For My Approval", path: "/pendingApproval" },
 ];
 
 const NavLink = ({ path, name }) => (

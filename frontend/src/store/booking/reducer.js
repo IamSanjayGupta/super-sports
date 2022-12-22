@@ -4,6 +4,7 @@ const initData = {
   bookings: [],
   bookingDetails: {},
   approvedPlayerList: [],
+  myPendingApprovalBookings: [],
   isloading: false,
   isError: false,
 };
@@ -22,7 +23,8 @@ export const bookingReducer = (state = initData, { type, payload }) => {
       return { ...state, isloading: false, bookingDetails: payload };
     case types.GET_APPROVED_PLAYER_LIST:
       return { ...state, isloading: false, approvedPlayerList: payload };
-
+    case types.GET_MY_PENDING_APPROVAL_BOOKINGS:
+      return { ...state, isloading: false, myPendingApprovalBookings: payload };
     default:
       return state;
   }

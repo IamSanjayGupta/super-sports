@@ -49,6 +49,25 @@ const createBooking = async ({ requester, event }) => {
   }
 };
 
+//get bookings pending for user approval
+const pendingBookings = async (organizer) => {
+  try {
+    let bookings = await bookingModel
+      .find({ status: "Pending" })
+      .populate("event")
+      // .find({ "event.organizer": organizer })
+      .populate("requester", ["firstName", "lastName", "email"]);
+
+    bookings = bookings.filter((el) => {
+      let obj = el.toObject();
+      return obj.event.organizer == organizer;
+    });
+    return bookings;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 const updateBooking = async (event) => {
   try {
     return await bookingModel.findOneAndUpdate({ event }, {}, { new: true, upsert: true });
@@ -80,4 +99,5 @@ module.exports = {
   updateBooking,
   approveBooking,
   rejectBooking,
+  pendingBookings,
 };

@@ -4,8 +4,9 @@ import NewEvent from "../components/event/NewEvent";
 import LoginPage from "./account/LoginPage";
 import SignupPage from "./account/SignupPage";
 import EventDetailsPage from "./event/EventDetailsPage";
-import RequestsPage from "./event/RequestsPage";
+import RequestsPage from "./Booking/RequestsPage";
 import HomePage from "./HomePage";
+import PendingForMyApprovalPage from "./Booking/PendingForMyApprovalPage";
 
 const AllRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AllRoutes = () => {
       <Route path="/newEvent" element={<NewEvent />} />
       <Route path="/eventDetails/:id" element={<EventDetailsPage />} />
       <Route path="/requests" element={<RequestsPage />} />
+      <Route path="/pendingApproval" element={<PendingForMyApprovalPage />} />
     </Routes>
   );
 };
