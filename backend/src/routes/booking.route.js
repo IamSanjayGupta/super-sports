@@ -65,7 +65,7 @@ booking.post("/", async (req, res) => {
 booking.patch("/:bookingId", async (req, res) => {
   const { status } = req.body;
   const { bookingId } = req.params;
-  console.log(status);
+
   if (!bookingId || !status) return res.status(400).send({ message: "Required Data missing" });
 
   try {

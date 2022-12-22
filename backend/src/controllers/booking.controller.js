@@ -70,9 +70,13 @@ const pendingBookings = async (organizer) => {
 
 //accept or reject booking
 const updateBooking = async (id, data) => {
-  console.log(data);
   try {
-    return await bookingModel.findByIdAndUpdate(id, data, { new: true });
+    let booking = await bookingModel.findById(id).populate("event");
+    if (new Date(booking.event.schedule) <= new Date(Date.now())) {
+      throw new Error("Event already Expired");
+    } else {
+      return await bookingModel.findByIdAndUpdate(id, data, { new: true });
+    }
   } catch (error) {
     throw new Error(error);
   }
