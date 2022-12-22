@@ -46,7 +46,7 @@ user.post("/login", async (req, res) => {
 user.get("/refreshToken/:refreshToken", async (req, res) => {
   try {
     let accessToken = getAccessToken(req.params.refreshToken);
-    return res.send({ status: true, message: "Access Token generated", data: { accessToken } });
+    return res.send({ message: "Access Token generated", data: { accessToken } });
   } catch (error) {
     error.message = "Invalid/Expire refresh token";
     return res.status(400).send({ message: error.message });
