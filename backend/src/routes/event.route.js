@@ -1,5 +1,5 @@
 const express = require("express");
-const { createEvent, getAllEvents } = require("../controllers");
+const { createEvent, getAllEvents, getBookings } = require("../controllers");
 const { getEventDetails } = require("../controllers/event.controller");
 const { authMiddleware } = require("../middlewares");
 
@@ -22,6 +22,7 @@ event.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     let event = await getEventDetails(id);
+    let booking = await getBookings({});
     return res.send({ message: "Events found", data: event });
   } catch (error) {
     return res.status(400).send({ message: error.message });
