@@ -13,15 +13,24 @@ const PendingForMyApprovalPage = () => {
   }, []);
 
   const handleBooking = (eventid, status) => {
-    dispatch(updateBookingAPI(eventid, { status })).then(() => {
-      toast({
-        title: "Event updated",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
+    dispatch(updateBookingAPI(eventid, { status }))
+      .then(() => {
+        toast({
+          title: "Event updated",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        dispatch(getPendingApprovalAPI());
+      })
+      .catch((error) => {
+        toast({
+          title: error,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
       });
-      dispatch(getPendingApprovalAPI());
-    });
   };
 
   return (
