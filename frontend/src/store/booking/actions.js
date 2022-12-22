@@ -48,3 +48,15 @@ export const getPendingApprovalAPI = () => async (dispatch) => {
     return Promise.reject(error.response.data.message);
   }
 };
+
+//Accept or reject booking handler
+export const updateBookingAPI = (bookingId, data) => async (dispatch) => {
+  dispatch({ type: types.BOOKING_LOADING });
+  try {
+    const res = await axiosInstance.patch("/booking/" + bookingId, data);
+    dispatch({ type: types.UPDATE_BOOKING, payload: res.data.data });
+  } catch (error) {
+    dispatch({ type: types.BOOKING_ERROR, payload: error.response.data.message });
+    return Promise.reject(error.response.data.message);
+  }
+};

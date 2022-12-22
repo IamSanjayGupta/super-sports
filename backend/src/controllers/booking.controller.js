@@ -68,25 +68,10 @@ const pendingBookings = async (organizer) => {
   }
 };
 
-const updateBooking = async (event) => {
+//accept or reject booking
+const updateBooking = async (id, data) => {
   try {
-    return await bookingModel.findOneAndUpdate({ event }, {}, { new: true, upsert: true });
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
-const approveBooking = async (event) => {
-  try {
-    return await bookingModel.findById();
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
-const rejectBooking = async (event) => {
-  try {
-    return await bookingModel.findOneAndUpdate({ event }, {}, { new: true, upsert: true });
+    return await bookingModel.findByIdAndUpdate(id, data, { new: true });
   } catch (error) {
     throw new Error(error);
   }
@@ -97,7 +82,5 @@ module.exports = {
   getBookings,
   getApprovedBookingUsers,
   updateBooking,
-  approveBooking,
-  rejectBooking,
   pendingBookings,
 };

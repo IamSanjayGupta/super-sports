@@ -2,10 +2,9 @@ const express = require("express");
 const {
   getBookings,
   createBooking,
-  approveBooking,
-  rejectBooking,
   getApprovedBookingUsers,
   pendingBookings,
+  updateBooking,
 } = require("../controllers");
 const { authMiddleware } = require("../middlewares");
 
@@ -63,20 +62,16 @@ booking.post("/", async (req, res) => {
 });
 
 //update(approve/reject) booking
-booking.patch("/:eventid", async (req, res) => {
-  const { userid, status } = req.body;
-  const { eventid } = req.body;
+booking.patch("/:bookingId", async (req, res) => {
+  const { status } = req.body;
+  const { bookingId } = req.params;
 
-  if (!userid || !eventid || !status)
-    return res.status(400).send({ message: "Required Data missing" });
+  if (!bookingId || !status) return res.status(400).send({ message: "Required Data missing" });
 
   try {
-    let book;
-    if (status === "Approve") {
-      book = await approveBooking({ requester: userid, event: eventid, status: "Approved" });
-    } else if (status === "Reject") {
-      book = await rejectBooking({ requester: userid, event: eventid, status: "Rejected" });
-    }
+    let book = await updateBooking(bookingId, {
+      status: status === "Approve" ? "Approved" : "Rejected",
+    });
     return res.send({ message: "Booking updated", data: book });
   } catch (error) {
     return res.status(400).send({ message: error.message });

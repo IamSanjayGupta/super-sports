@@ -1,12 +1,8 @@
 import React from "react";
 import { Box, Button, HStack, Tag, Text, useColorModeValue, VStack } from "@chakra-ui/react";
 
-const PendingBookingCard = (data) => {
+const PendingBookingCard = ({ data, handleBooking }) => {
   const { _id, status, event, requester } = data;
-  const handleClick = (value) => {
-    if (value) {
-    }
-  };
 
   return (
     <VStack
@@ -31,10 +27,10 @@ const PendingBookingCard = (data) => {
           Category: <Tag>{event.category}</Tag>
         </Text>
         <HStack>
-          <Button size="sm" colorScheme={"blue"} onClick={() => handleClick("Accept")}>
+          <Button size="sm" colorScheme={"blue"} onClick={() => handleBooking(_id, "Accept")}>
             Accept
           </Button>
-          <Button size="sm" colorScheme={"red"} onClick={() => handleClick("Reject")}>
+          <Button size="sm" colorScheme={"red"} onClick={() => handleBooking(_id, "Reject")}>
             Reject
           </Button>
         </HStack>
