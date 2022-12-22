@@ -14,9 +14,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { createBookingAPI } from "../../store/booking/actions";
 import { getEventDetailsAPI } from "../../store/event/action";
+import PlayerList from "./PlayerList";
 
 const EventDetails = () => {
   const { eventDetails } = useSelector((store) => store.event);
+  const { approvedPlayerList } = useSelector((store) => store.booking);
   const { id } = useParams();
   const dispatch = useDispatch();
   const toast = useToast();
@@ -24,6 +26,7 @@ const EventDetails = () => {
   useEffect(() => {
     dispatch(getEventDetailsAPI(id));
   }, []);
+  console.log(approvedPlayerList);
 
   const handleBooking = () => {
     dispatch(createBookingAPI({ status: "approve", event: eventDetails._id }))
@@ -49,12 +52,7 @@ const EventDetails = () => {
     <>
       {eventDetails._id ? (
         <Stack flexDir={{ base: "column", md: "row" }} m="10" gap="10">
-          <Image
-            src={
-              "https://ichef.bbci.co.uk/news/640/cpsprodpb/a617/live/4c8ad930-65d9-11ed-a6af-4f332dcec329.jpg"
-            }
-            width={{ base: "100%", md: "50%" }}
-          />
+          <Image src={eventDetails.picture} width={{ base: "100%", md: "50%" }} />
           <VStack alignItems={"flex-start"} fontWeight={"500"}>
             <Heading fontWeight={"700"}>{eventDetails.title}</Heading>
             <Text>Description: {eventDetails.description}</Text>
@@ -72,14 +70,17 @@ const EventDetails = () => {
               Organizer: {eventDetails.organizer.firstName} {eventDetails.organizer.lastName}
             </Text>
             <Button
-              disabled={eventDetails.player_limits == eventDetails.bookedCount}
-              size="sm"
+              disabled={
+                eventDetails.player_limits === eventDetails.bookedCount ||
+                approvedPlayerList?.length
+              }
               colorScheme={"blue"}
               variant="outline"
               onClick={handleBooking}
             >
-              Request
+              {approvedPlayerList?.length ? "Already joined" : "Request"}
             </Button>
+            <PlayerList eventId={eventDetails._id} />
           </VStack>
         </Stack>
       ) : (

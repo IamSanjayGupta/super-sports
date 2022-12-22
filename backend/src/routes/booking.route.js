@@ -2,15 +2,16 @@ const express = require("express");
 const {
   getBookings,
   createBooking,
-  updateBooking,
   approveBooking,
   rejectBooking,
+  getApprovedBookingUsers,
 } = require("../controllers");
 const { authMiddleware } = require("../middlewares");
 
 const booking = express.Router();
 booking.use(authMiddleware);
 
+//get user's bookings
 booking.get("/", async (req, res) => {
   const { userid, ...others } = req.body;
   try {
@@ -24,6 +25,19 @@ booking.get("/", async (req, res) => {
   }
 });
 
+//get all approved user list of an event if you user itself apporved.
+booking.get("/:eventid", async (req, res) => {
+  const { userid } = req.body;
+  const { eventid } = req.params;
+  try {
+    let players = await getApprovedBookingUsers({ requester: userid, eventid });
+    return res.send({ message: players.length ? "Approved Players" : "No player", data: players });
+  } catch (error) {
+    return res.status(400).send({ message: error.message });
+  }
+});
+
+//create booking
 booking.post("/", async (req, res) => {
   const { userid, event } = req.body;
   if (!userid || !event) return res.status(400).send({ message: "Required Data missing" });
@@ -36,6 +50,7 @@ booking.post("/", async (req, res) => {
   }
 });
 
+//update(approve/reject) booking
 booking.patch("/:eventid", async (req, res) => {
   const { userid, status } = req.body;
   const { eventid } = req.body;
@@ -55,7 +70,5 @@ booking.patch("/:eventid", async (req, res) => {
     return res.status(400).send({ message: error.message });
   }
 });
-
-booking.get("/:id", async (req, res) => {});
 
 module.exports = booking;

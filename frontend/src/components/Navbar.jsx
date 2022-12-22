@@ -22,9 +22,12 @@ import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link as RichLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAPI } from "../store/auth/action";
+import darkLogo from "../assets/dark_logo.png";
+import lightLogo from "../assets/light_logo.png";
+
 const Links = [
   { name: "New Event", path: "/newEvent" },
-  { name: "Signup", path: "/signup" },
+  { name: "Requests", path: "/requests" },
 ];
 
 const NavLink = ({ path, name }) => (
@@ -77,10 +80,7 @@ const Navbar = () => {
         />
         <HStack spacing={8} alignItems={"center"}>
           <Link as={RichLink} to="/">
-            <Image
-              width={"150px"}
-              src="https://www.sport-fm.com.cy/wp-content/uploads/2021/12/Super-Sport-FM-LOGO-2021-WHITE-1.png"
-            />
+            <Image width={"150px"} src={colorMode === "light" ? lightLogo : darkLogo} />
           </Link>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
             {Links.map((link) => (

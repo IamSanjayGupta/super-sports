@@ -31,7 +31,7 @@ const EventList = () => {
   };
 
   return (
-    <VStack w="9tvw" m="auto" bg={useColorModeValue("gray.50", "gray.800")}>
+    <VStack w="full" m="auto" bg={useColorModeValue("gray.50", "gray.800")}>
       <VStack mx={"auto"} w={"full"} p={12}>
         <Stack
           flexDir={{ base: "column", md: "row" }}

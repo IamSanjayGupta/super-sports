@@ -4,6 +4,7 @@ import NewEvent from "../components/event/NewEvent";
 import LoginPage from "./account/LoginPage";
 import SignupPage from "./account/SignupPage";
 import EventDetailsPage from "./event/EventDetailsPage";
+import RequestsPage from "./event/RequestsPage";
 import HomePage from "./HomePage";
 
 const AllRoutes = () => {
@@ -14,6 +15,7 @@ const AllRoutes = () => {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/newEvent" element={<NewEvent />} />
       <Route path="/eventDetails/:id" element={<EventDetailsPage />} />
+      <Route path="/requests" element={<RequestsPage />} />
     </Routes>
   );
 };

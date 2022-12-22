@@ -1,10 +1,9 @@
 import { Tag, Text, VStack, Button, Image, useColorModeValue, Box } from "@chakra-ui/react";
 import React from "react";
 import { Link as RichLink } from "react-router-dom";
-import PlayerList from "./PlayerList";
 
-const EventCard = (event) => {
-  const { _id, title, description, picture, schedule, player_limits, category, organizer } = event;
+const BookingCard = (data) => {
+  const { _id, event, status } = data;
 
   return (
     <VStack
@@ -13,14 +12,21 @@ const EventCard = (event) => {
       bg={useColorModeValue("white", "gray.700")}
       alignItems={"flex-start"}
     >
-      <Box backgroundImage={picture} backgroundSize="cover" width="full" height={"200px"}></Box>
+      <Box
+        backgroundImage={event.picture}
+        backgroundSize="cover"
+        width="full"
+        height={"200px"}
+      ></Box>
 
       <VStack p="4" alignItems={"flex-start"}>
-        <Text fontWeight={"700"}>{title}</Text>
+        <Text fontWeight={"700"}>{event.title}</Text>
         <Text fontWeight={"500"}>
-          Category: <Tag>{category}</Tag>
+          Category: <Tag>{event.category}</Tag>
         </Text>
-        <Text fontSize={"sm"}>Schedule: {new Date(schedule).toLocaleString()}</Text>
+        <Text fontWeight={"500"}>
+          Status: <Tag>{status}</Tag>
+        </Text>
         <Button
           as={RichLink}
           to={`/eventDetails/${_id}`}
@@ -35,4 +41,4 @@ const EventCard = (event) => {
   );
 };
 
-export default EventCard;
+export default BookingCard;
