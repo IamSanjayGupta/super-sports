@@ -17,13 +17,13 @@ event.get("/", async (req, res) => {
   }
 });
 
-//get one event
+//get one event details
 event.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     let event = await getEventDetails(id);
-    let booking = await getBookings({});
-    return res.send({ message: "Events found", data: event });
+    let bookedCount = (await getBookings({ event: id, status: "Approved" })).length;
+    return res.send({ message: "Events found", data: { ...event.toObject(), bookedCount } });
   } catch (error) {
     return res.status(400).send({ message: error.message });
   }

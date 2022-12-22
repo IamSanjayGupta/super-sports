@@ -1,5 +1,4 @@
 const { bookingModel, eventModel } = require("../models");
-const { getEventDetails } = require("./event.controller");
 
 const getBookings = async (others) => {
   try {
