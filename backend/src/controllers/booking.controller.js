@@ -58,6 +58,10 @@ const pendingBookings = async (organizer) => {
       // .find({ "event.organizer": organizer })
       .populate("requester", ["firstName", "lastName", "email"]);
 
+    // find({ status: "Pending" }).populate({
+    //   path: "event",
+    //   match: { organizer },
+    // });
     bookings = bookings.filter((el) => {
       let obj = el.toObject();
       return (
