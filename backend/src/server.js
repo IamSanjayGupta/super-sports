@@ -21,4 +21,3 @@ app.listen(process.env.PORT, async () => {
     console.log("Unable to connect to database");
   }
 });
-
