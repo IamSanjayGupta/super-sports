@@ -59,7 +59,7 @@ const Signup = () => {
   };
 
   return (
-    <VStack bg={useColorModeValue("gray.50", "gray.800")}>
+    <VStack minH={"88vh"} bg={useColorModeValue("gray.50", "gray.800")}>
       <VStack spacing={8} mx={"auto"} maxW={"lg"} p={6}>
         <Heading textAlign={"center"} fontSize={"4xl"}>
           Sign up

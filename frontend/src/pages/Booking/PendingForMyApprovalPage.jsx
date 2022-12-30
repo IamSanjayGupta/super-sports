@@ -1,11 +1,11 @@
-import { SimpleGrid, Text, useToast, VStack } from "@chakra-ui/react";
+import { SimpleGrid, Spinner, Text, useToast, VStack } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PendingBookingCard from "../../components/booking/PendingBookingCard";
 import { getPendingApprovalAPI, updateBookingAPI } from "../../store/booking/actions";
 
 const PendingForMyApprovalPage = () => {
-  const { myPendingApprovalBookings } = useSelector((store) => store.booking);
+  const { myPendingApprovalBookings, isloading } = useSelector((store) => store.booking);
   const dispatch = useDispatch();
   const toast = useToast();
   useEffect(() => {
@@ -35,7 +35,9 @@ const PendingForMyApprovalPage = () => {
 
   return (
     <VStack>
-      {myPendingApprovalBookings?.length ? (
+      {isloading ? (
+        <Spinner thickness="4px" color="blue.500" size="xl" />
+      ) : myPendingApprovalBookings?.length ? (
         <SimpleGrid w="full" gap="4" p="5" columns={{ base: 1, md: 2, lg: 4 }}>
           {myPendingApprovalBookings?.map((el) => {
             return <PendingBookingCard key={el._id} data={el} handleBooking={handleBooking} />;

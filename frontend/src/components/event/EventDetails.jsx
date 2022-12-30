@@ -1,8 +1,10 @@
 import {
   Button,
+  Center,
   Heading,
   HStack,
   Image,
+  Spinner,
   Stack,
   Tag,
   Text,
@@ -17,7 +19,7 @@ import { getEventDetailsAPI } from "../../store/event/action";
 import PlayerList from "./PlayerList";
 
 const EventDetails = () => {
-  const { eventDetails } = useSelector((store) => store.event);
+  const { eventDetails, isloading } = useSelector((store) => store.event);
   const { approvedPlayerList } = useSelector((store) => store.booking);
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -54,7 +56,11 @@ const EventDetails = () => {
 
   return (
     <>
-      {eventDetails._id ? (
+      {isloading ? (
+        <Center>
+          <Spinner thickness="4px" color="blue.500" size="xl" />
+        </Center>
+      ) : eventDetails._id ? (
         <Stack flexDir={{ base: "column", md: "row" }} m="10" gap="10">
           <Image src={eventDetails.picture} width={{ base: "100%", md: "50%" }} />
           <VStack alignItems={"flex-start"} fontWeight={"500"}>
@@ -88,7 +94,7 @@ const EventDetails = () => {
           </VStack>
         </Stack>
       ) : (
-        <Text textAlign={"center"}>Loading...</Text>
+        <Text textAlign={"center"}>Something went wrong!</Text>
       )}
     </>
   );
