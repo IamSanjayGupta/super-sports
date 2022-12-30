@@ -55,13 +55,8 @@ const pendingBookings = async (organizer) => {
     let bookings = await bookingModel
       .find({ status: "Pending" })
       .populate("event")
-      // .find({ "event.organizer": organizer })
       .populate("requester", ["firstName", "lastName", "email"]);
 
-    // find({ status: "Pending" }).populate({
-    //   path: "event",
-    //   match: { organizer },
-    // });
     bookings = bookings.filter((el) => {
       let obj = el.toObject();
       return (

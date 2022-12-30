@@ -10,12 +10,10 @@ const createEvent = async (eventData) => {
 
 const getAllEvents = async (query, others) => {
   try {
-    return await eventModel
-      .aggregate([
-        { $match: { $and: [{ title: { $regex: query, $options: "i" } }, { ...others }] } },
-        { $unset: ["updatedAt", "createdAt", "__v"] },
-      ])
-      .collation({ locale: "en", strength: 2 });
+    return await eventModel.aggregate([
+      { $match: { $and: [{ title: { $regex: query, $options: "i" } }, { ...others }] } },
+      { $unset: ["updatedAt", "createdAt", "__v"] },
+    ]);
   } catch (error) {
     throw new Error(error);
   }
